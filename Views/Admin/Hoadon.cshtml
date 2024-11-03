@@ -1,0 +1,42 @@
+﻿@model HoaDon
+
+@{
+    ViewBag.Title = "Hóa đơn";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<h2>Hóa đơn số: @Model.MaHoaDon</h2>
+<p>Ngày lập: @Model.NgayLap.ToShortDateString()</p>
+<p>Thành tiền: @Model.ThanhTien</p>
+<p>Số phòng: @Model.MaPhongNavigation?.SoPhong</p>
+
+
+@if (Model.ChiTietHoaDons != null && Model.ChiTietHoaDons.Count > 0)
+{
+    <h3>Chi tiết hóa đơn:</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Mã chi tiết</th>
+                <th>Số phòng</th>
+                <th>Tiền phòng</th>
+                <th>Tiền điện</th>
+                <th>Tiền nước</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var chiTiet in Model.ChiTietHoaDons)
+            {
+                <tr>
+                    <td>@chiTiet.MaChiTiet</td>
+                    <td>@chiTiet.MaPhongNavigation?.SoPhong</td>
+                    <td>@chiTiet.TienPhong</td>
+                    <td>@chiTiet.TienDien</td>
+                    <td>@chiTiet.TienNuoc</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@Html.ActionLink("In hóa đơn (PDF)", "InHoaDonPDF", new { maHoaDon = Model.MaHoaDon }, new { @class = "btn btn-primary" })
