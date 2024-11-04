@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\QL_PhongTro_Web.props" />
-</Project>
