@@ -1,0 +1,136 @@
+﻿@model Phong
+
+@{
+    ViewBag.Title = "EditRoom";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Sửa phòng</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* Chỉnh màu nền và khoảng cách giữa các phần tử */
+        body {
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Đặt phần tiêu đề ở giữa và làm đậm */
+        h4 {
+            text-align: center;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+
+        /* Định dạng phần form */
+        .form-horizontal {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px #d3d3d3;
+        }
+
+        /* Định dạng các phần tử input và nút */
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .checkbox {
+            margin: 0;
+        }
+
+        /* Định dạng nút "Thêm phòng" */
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+        }
+
+        /* Định dạng liên kết "Back to List" */
+        a.btn-default {
+            display: block;
+            text-align: center;
+            background-color: #ccc;
+            padding: 10px;
+            text-decoration: none;
+            color: #333;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-horizontal">
+        <h4>Sửa phòng</h4>
+        @if (ViewData["err"] != null)
+        {
+            <div class="alert alert-danger">
+                @ViewData["err"]
+            </div>
+        }
+
+        @using (Html.BeginForm("EditRoom", "Admin", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.MaPhong)
+
+    <div class="form-group">
+        Số phòng
+        <div class="col-md-10">
+            @Html.DisplayFor(model => model.SoPhong, new { @class = "form-control" })
+            @Html.HiddenFor(model => model.SoPhong)
+        </div>
+    </div>
+
+            <div class="form-group">
+                Loại phòng
+                <div class="col-md-10" style="width:220px;">
+                    @Html.DropDownListFor(model => model.LoaiPhong, new List<SelectListItem>
+    {
+        new SelectListItem { Text = "Có gác", Value = "Có gác" },
+        new SelectListItem { Text = "Không gác", Value = "Không gác" }
+    }, "Chọn loại phòng", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.LoaiPhong, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                Giá thuê tháng
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.GiaThueThang, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.GiaThueThang, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                Trạng thái phòng
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.DaThue)
+                        @Html.ValidationMessageFor(model => model.DaThue, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        }
+    </div>
+
+</body>
+</html>
